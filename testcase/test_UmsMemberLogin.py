@@ -23,7 +23,7 @@ class Testlogin(unittest.TestCase):
             "wxUnionid": "string"
         }
         response = requests.post(url=self.url,json=self.data)
-        self.assertIn("3371219198",response.text)
+        self.assertIn("3371220102",response.text)
         return response.headers['authorization']
 
     #   已注册账号 + 五位数字密码登陆 > 登陆
