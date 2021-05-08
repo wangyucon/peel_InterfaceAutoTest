@@ -4,23 +4,36 @@
 """
 import unittest
 import requests
-import json
-from peel_interface.testcase import test_UmsMemberLogin
+from peel_interface.common.read_excel import *
+import os
+import yaml
 
 class TestUpdateInfo(unittest.TestCase):
-    url_info = "http://47.114.189.49:8000/member/info"
 
-    def test_info_nickname(self):
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        print('以调用info函数')
+        cls.data_list = excel_to_list("../data/test_data.xlsx", "UpdataMemberInfo")
+        current_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+        with open(current_path + '\\data' + '\\token.yaml', 'r') as f:
+            cls.temp = yaml.load(f.read(), Loader=yaml.FullLoader)
+            print(cls.temp['token'])
+
+    def test_info_get(self):
         #   获取登陆身份令牌token
-        peel_token = test_UmsMemberLogin.Testlogin().test_login_six()
-        headers = {'authorization': peel_token}
-        data = {
-        "nickname": "昵称修改"
-        }
-        response = requests.put(url=self.url_info,headers=headers,json=data)
-        json_info = json.loads(response.text)
-        message = json_info['message']
-        self.assertEqual("编辑成功",message,msg="通过message断言，修改个人信息接口报错...")
+        # peel_token = Testlogin().test_login_success()
+        headers = {'authorization': self.temp['token']}
+
+        case_data = get_test_data(self.data_list, 'test_info_get')
+        if not case_data:   # 有可能为None
+            print("用例数据不存在")
+        url = case_data.get('url')
+        expect_res = case_data.get('expect_res')  # 期望数据
+
+        response = requests.get(url=url,headers=headers)
+        self.assertIn(expect_res,response.text)
+        print(response.text)
 
 
 
