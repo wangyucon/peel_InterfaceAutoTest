@@ -9,7 +9,7 @@ class TestCommentController(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.data_list = excel_to_list("../data/test_data.xlsx", "CommentController")
+        cls.data_list = excel_to_list("../data/test_data.xlsx", "CommentControllergit push -u origin master  ")
         #   获取登陆身份令牌token
         current_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
         with open(current_path + '\\data' + '\\token.yaml', 'r') as f:
