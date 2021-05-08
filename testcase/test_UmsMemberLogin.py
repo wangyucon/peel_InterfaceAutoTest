@@ -99,7 +99,7 @@ class Testlogin(unittest.TestCase):
         self.assertEqual(expect_res.strip(), response.text)
 
 
-    # 用户名为空，验证是否登录失败
+    # 用户名为空，验证是否登录失
     def test_login_phone_bull(self):
 
         case_data = get_test_data(self.data_list, 'test_login_phone_bull')
