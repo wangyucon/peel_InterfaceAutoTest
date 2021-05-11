@@ -1,6 +1,5 @@
 """
-修改用户个人信息接口
-此接口耦合账号密码登录接口
+个人信息模块测试用例
 """
 import json
 import unittest
@@ -22,7 +21,7 @@ class TestUpdateInfo(unittest.TestCase):
             cls.temp = yaml.load(f.read(), Loader=yaml.FullLoader)
             print(cls.temp['token'])
 
-
+    # 获取个人信息
     def test_info_get(self):
 
         headers = {'authorization': self.temp['token']}
@@ -37,7 +36,7 @@ class TestUpdateInfo(unittest.TestCase):
         self.assertIn(expect_res,response.text)
         print(response.text)
 
-
+    # 修改个人信息——头像
     def test_info_edit_avatar(self):
 
         headers = {'authorization': self.temp['token']}
@@ -53,6 +52,7 @@ class TestUpdateInfo(unittest.TestCase):
         self.assertEqual(expect_res,response.text)
 
 
+    # 修改个人信息——背景图
     def test_info_edit_backgroundImage(self):
 
         headers = {'authorization': self.temp['token']}
@@ -68,6 +68,7 @@ class TestUpdateInfo(unittest.TestCase):
         self.assertEqual(expect_res,response.text)
 
 
+    # 修改个人信息——昵称
     def test_info_edit_nickname(self):
 
         headers = {'authorization': self.temp['token']}
@@ -83,6 +84,7 @@ class TestUpdateInfo(unittest.TestCase):
         self.assertEqual(expect_res,response.text)
 
 
+    # 修改个人信息——性别
     def test_info_edit_sex(self):
 
         headers = {'authorization': self.temp['token']}
@@ -98,6 +100,7 @@ class TestUpdateInfo(unittest.TestCase):
         self.assertEqual(expect_res,response.text)
 
 
+    # 修改个人信息——简介
     def test_info_edit_signature(self):
 
         headers = {'authorization': self.temp['token']}
