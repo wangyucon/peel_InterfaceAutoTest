@@ -1,6 +1,6 @@
 import unittest
 
-from peel_interface.testsuite.HTMLTestReportCN import HTMLTestRunner
+from testsuite.HTMLTestReportCN import HTMLTestRunner
 
 
 suite = unittest.defaultTestLoader.discover("./testcase")

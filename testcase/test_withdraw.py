@@ -4,7 +4,7 @@
 """
 import unittest
 import requests
-from peel_interface.common.read_excel import *
+from common.read_excel import *
 import os
 import yaml
 

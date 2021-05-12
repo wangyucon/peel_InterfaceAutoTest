@@ -6,7 +6,7 @@ import json
 import unittest
 import requests
 from ruamel.yaml import YAML
-from peel_interface.common.read_excel import *
+from common.read_excel import *
 
 
 class Testlogin(unittest.TestCase):
