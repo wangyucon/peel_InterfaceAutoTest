@@ -1,5 +1,6 @@
 """
     登陆模块测试用例
+    token.yaml、test_data.xlsx临时修改路径（run_all相对路径）
 """
 import json
 import unittest
@@ -8,13 +9,12 @@ from ruamel.yaml import YAML
 from peel_interface.common.read_excel import *
 
 
-
 class Testlogin(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print('已调用login函数')
-        cls.data_list = excel_to_list("../data/test_data.xlsx", "UmsMemberLogin")
+        print('Testlogin模块用例')
+        cls.data_list = excel_to_list("./data/test_data.xlsx", "UmsMemberLogin")
 
 
     # 输入已注册的用户名和正确的密码，验证是否成功登录
@@ -32,7 +32,7 @@ class Testlogin(unittest.TestCase):
 
         yaml = YAML()
         # 把token值写入配置文件中
-        yamlpath = r'..\data\token.yaml'  # 保存文件路径
+        yamlpath = r'.\data\token.yaml'  # 保存文件路径
         # 提取token字段
         tokenValue = {
             'token': response.headers['authorization']

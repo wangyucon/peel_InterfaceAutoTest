@@ -12,13 +12,12 @@ class TestWithdraw(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-
-        cls.data_list = excel_to_list("../data/test_data.xlsx", "withdraw")
+        print("TestWithdraw模块用例")
+        cls.data_list = excel_to_list("./data/test_data.xlsx", "withdraw")
         #   获取登陆身份令牌token
         current_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
         with open(current_path + '\\data' + '\\token.yaml', 'r') as f:
             cls.temp = yaml.load(f.read(), Loader=yaml.FullLoader)
-            print(cls.temp['token'])
 
 
     def test_withdraw(self):

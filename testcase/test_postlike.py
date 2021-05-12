@@ -12,13 +12,12 @@ class TestPostLike(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print('以调用info函数')
-        cls.data_list = excel_to_list("../data/test_data.xlsx", "PmsPostLikeController")
+        print('TestPostLike模块用例')
+        cls.data_list = excel_to_list("./data/test_data.xlsx", "PmsPostLikeController")
         #   获取登陆身份令牌token
         current_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
         with open(current_path + '\\data' + '\\token.yaml', 'r') as f:
             cls.temp = yaml.load(f.read(), Loader=yaml.FullLoader)
-            print(cls.temp['token'])
 
 
     # 增加帖子点赞记录

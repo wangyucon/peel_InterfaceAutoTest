@@ -12,12 +12,12 @@ class TestCommentController(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.data_list = excel_to_list("../data/test_data.xlsx", "CommentControllergit push -u origin master  ")
+        print("TestCommentController模块用例")
+        cls.data_list = excel_to_list("./data/test_data.xlsx", "CommentController")
         #   获取登陆身份令牌token
         current_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
         with open(current_path + '\\data' + '\\token.yaml', 'r') as f:
             cls.temp = yaml.load(f.read(), Loader=yaml.FullLoader)
-            print(cls.temp['token'])
 
     # 获取空评论列表
     def test_comment_null(self):

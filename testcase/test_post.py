@@ -1,5 +1,6 @@
 """
     首页获取帖子列表
+    token.yaml、test_data.xlsx临时修改路径（run_all相对路径）
 """
 import json
 import unittest
@@ -14,8 +15,8 @@ class TestPost(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-
-        cls.data_list = excel_to_list("../data/test_data.xlsx", "PmsPostController")
+        print("TestPost模块用例")
+        cls.data_list = excel_to_list("./data/test_data.xlsx", "PmsPostController")
         # 获取token.yaml中的身份令牌token
         cls.current_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
         with open(cls.current_path + '\\data' + '\\token.yaml', 'r') as f:
@@ -101,7 +102,7 @@ class TestPost(unittest.TestCase):
         # 创建YAML对象
         yaml = YAML()
         # 保存文件路径
-        yamlpath = r'..\data\postId.yaml'
+        yamlpath = r'.\data\postId.yaml'
         # 提取postId字段
         postIdValue = {
             'postId': res['data']['id']
