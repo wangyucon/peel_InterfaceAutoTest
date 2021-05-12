@@ -4,7 +4,7 @@
 import json
 import unittest
 import requests
-from ruamel import yaml
+from ruamel.yaml import YAML
 from peel_interface.common.read_excel import *
 
 
@@ -29,15 +29,16 @@ class Testlogin(unittest.TestCase):
 
         response = requests.post(url=url, json=json.loads(data))
         self.assertIn(expect_res, response.text)
-        # return response.headers['authorization']
+
+        yaml = YAML()
         # 把token值写入配置文件中
-        yamlpath = r'D:\test_software\pythonProject\peel_interface\data\token.yaml'  # 保存文件路径
+        yamlpath = r'..\data\token.yaml'  # 保存文件路径
         # 提取token字段
         tokenValue = {
             'token': response.headers['authorization']
         }
         with open(yamlpath, "w", encoding="utf-8") as f:
-            yaml.dump(tokenValue, f, Dumper=yaml.RoundTripDumper)
+            yaml.dump(tokenValue, f)
 
 
 

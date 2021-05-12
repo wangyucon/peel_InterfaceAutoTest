@@ -1,31 +1,66 @@
 """
-增加帖子点赞记录接口  传入postId
-此接口耦合登录接口、获取个人帖子列表接口
+增加/删除帖子点赞记录接口
 """
 import unittest
 import requests
-import json
-from peel_interface.testcase import test_UmsMemberLogin,test_personalpost
+from peel_interface.common.read_excel import *
+import os
+import yaml
+
 
 class TestPostLike(unittest.TestCase):
-    url_post_like = "http://47.114.189.49:8000/like?postId=8457325026"
 
+    @classmethod
+    def setUpClass(cls) -> None:
+        print('以调用info函数')
+        cls.data_list = excel_to_list("../data/test_data.xlsx", "PmsPostLikeController")
+        #   获取登陆身份令牌token
+        current_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+        with open(current_path + '\\data' + '\\token.yaml', 'r') as f:
+            cls.temp = yaml.load(f.read(), Loader=yaml.FullLoader)
+            print(cls.temp['token'])
+
+
+    # 增加帖子点赞记录
     def test_post_like(self):
-        peel_token = test_UmsMemberLogin.Testlogin().test_login_six()
-        headers = {'authorization': peel_token}
+        headers = {'authorization': self.temp['token']}
 
-        response = requests.post(url=self.url_post_like,headers=headers)
-        res = json.loads(response.text)
-        #   提取帖子喜欢状态
-        post_likeStatus = test_personalpost.TestPersonalPost().test_post_personal()
+        case_data = get_test_data(self.data_list, 'test_post_like')
+        if not case_data:  # 有可能为None
+            print("用例数据不存在")
+        url = case_data.get('url')
+        expect_res = case_data.get('expect_res')  # 期望数据
 
-        #   通过接口返回信息以及点赞状态判断该帖子是否点赞成功
-        if res["message"] == "该帖子你已经赞过了～":  #
-            print("该帖子已被你赞过")
-        elif post_likeStatus is not "null":
-            print("点赞作品成功~")
-        else:
-            print("点赞作品失败~!")
+        response = requests.post(url=url, headers=headers)
+        self.assertIn(expect_res, response.text)
+
+
+    # 点赞已点赞过的帖子
+    def test_post_like_fail(self):
+        headers = {'authorization': self.temp['token']}
+
+        case_data = get_test_data(self.data_list, 'test_post_like_fail')
+        if not case_data:  # 有可能为None
+            print("用例数据不存在")
+        url = case_data.get('url')
+        expect_res = case_data.get('expect_res')  # 期望数据
+
+        response = requests.post(url=url, headers=headers)
+        self.assertIn(expect_res, response.text)
+
+
+    # 删除帖子点赞记录
+    def test_post_like_off(self):
+        headers = {'authorization': self.temp['token']}
+
+        case_data = get_test_data(self.data_list, 'test_post_like_off')
+        if not case_data:  # 有可能为None
+            print("用例数据不存在")
+        url = case_data.get('url')
+        expect_res = case_data.get('expect_res')  # 期望数据
+
+        response = requests.delete(url=url, headers=headers)
+        self.assertIn(expect_res, response.text)
 
 
 
